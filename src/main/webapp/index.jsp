@@ -26,6 +26,11 @@
 <div class="container">
     <div class="container-fluid">
         <h1>ToDo List</h1>
+        <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.email}"/>
+        </a>
+        <a class="nav-link" href="LogoutServlet">
+            Log out
+        </a>
     </div>
     <form action="<%=request.getContextPath()%>/tasks" method="post">
         <div class="form-group">
@@ -94,7 +99,7 @@
         e.preventDefault()
         let task = document.querySelector('#task').value;
         if (validate(task)) {
-            fetch('http://localhost:8081/job4j_todo/tasks',
+            fetch('http://localhost:8081/job4j_todo/tasks.do',
                 {
                     method: 'POST',
                     headers: {
@@ -135,7 +140,7 @@
                     } else {
                         event.target.parentNode.parentNode.classList.remove("task--checked");
                     }
-                    fetch('http://localhost:8081/job4j_todo/tasks?ID=' + event.target.value + "&completed=" + event.target.checked,
+                    fetch('http://localhost:8081/job4j_todo/tasks.do?ID=' + event.target.value + "&completed=" + event.target.checked,
                         {
                             method: 'GET'
                         }
@@ -172,7 +177,7 @@
                     row = event.target.parentNode.parentNode.parentNode;
                 }
                 row.parentNode.removeChild(row);
-                fetch('http://localhost:8081/job4j_todo/delete?ID=' + id,
+                fetch('http://localhost:8081/job4j_todo/delete.do?ID=' + id,
                     {
                         method: 'GET'
                     }
@@ -190,7 +195,7 @@
         /**
          * Upload all tasks.
          */
-        fetch('http://localhost:8081/job4j_todo/tasks',
+        fetch('http://localhost:8081/job4j_todo/tasks.do',
             {
                 method: 'POST',
                 headers: {
@@ -277,7 +282,7 @@
     toggler.addEventListener('click', (e) => {
         isToggle = !isToggle;
         document.querySelector('#usersTable tbody').innerHTML = "";
-        fetch('http://localhost:8081/job4j_todo/tasks',
+        fetch('http://localhost:8081/job4j_todo/tasks.do',
             {
                 method: 'POST',
                 headers: {

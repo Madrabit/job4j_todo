@@ -69,7 +69,7 @@ public class HiberMain {
     public static List<Task> findAll(SessionFactory sf) {
         Session session = sf.openSession();
         session.beginTransaction();
-        List<Task>  result = session.createQuery("from ru.job4j.todo.model.Task").list();
+        List<Task> result = session.createQuery("from ru.job4j.todo.model.Task").list();
         session.getTransaction().commit();
         session.close();
         return result;

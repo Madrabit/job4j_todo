@@ -1,6 +1,7 @@
 package ru.job4j.todo.store;
 
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface Store {
      * Find all tasks.
      * @return Return tasks.
      */
-    List<Task> findAll();
+    List<Task> findAll(String email);
 
     /**
      * Find task by id.
@@ -44,4 +45,17 @@ public interface Store {
      * @return Task.
      */
     Task findById(Integer id);
+
+    /**
+     * Find User by email.
+     * @param email
+     * @return
+     */
+    User findByEmail(String email);
+
+    /**
+     * Add new User.
+     * @param user
+     */
+    void addUser(User user);
 }

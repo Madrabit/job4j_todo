@@ -1,5 +1,7 @@
 package ru.job4j.todo.store;
+
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 
 import java.util.*;
 
@@ -36,12 +38,22 @@ public class StoreStub implements Store {
     }
 
     @Override
-    public List<Task> findAll() {
-        return new ArrayList<>(taskMap.values());
+    public List<Task> findAll(String email) {
+        return null;
     }
 
     @Override
     public Task findById(Integer id) {
         return taskMap.get(id);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public void addUser(User user) {
+
     }
 }

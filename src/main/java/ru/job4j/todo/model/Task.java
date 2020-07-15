@@ -20,12 +20,26 @@ public class Task {
     private Timestamp date;
     private boolean completed;
 
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Task() {
     }
 
     public Task(String name) {
         this.name = name;
         this.date = new Timestamp(System.currentTimeMillis());
+    }
+
+
+    public static Task of(String name, User user) {
+        Task task = new Task();
+        task.name = name;
+        task.user = user;
+        task.date = new Timestamp(System.currentTimeMillis());
+        return task;
     }
 
     public int getId() {
@@ -58,6 +72,14 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

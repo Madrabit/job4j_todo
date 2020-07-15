@@ -13,7 +13,6 @@ import ru.job4j.todo.store.HiberStore;
 import ru.job4j.todo.store.Store;
 import ru.job4j.todo.store.StoreStub;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class HiberStoreTest {
         when(req.getParameter("id")).thenReturn("0");
         when(req.getParameter("name")).thenReturn("Do Some Thing");
         new TodoServlet().doPost(req, resp);
-        List<Task> postList = new ArrayList<>(HiberStore.instOf().findAll());
+        List<Task> postList = new ArrayList<>(HiberStore.instOf().findAll("test"));
         assertThat(postList.get(0).getName(), is("Do Some Thing"));
         assertThat(HiberStore.instOf().findById(0).getName(), is("Do Some Thing"));
     }

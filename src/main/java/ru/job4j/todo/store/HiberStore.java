@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.util.HibernateUtil;
 
 import java.util.List;
@@ -83,9 +84,13 @@ public class HiberStore implements Store {
     }
 
     @Override
-    public List<Task> findAll() {
+    public List<Task> findAll(String email) {
         return this.tx(
-                session -> session.createQuery("from ru.job4j.todo.model.Task").list()
+                session -> {
+                    Query<Task> query = session.createQuery("from Task t join fetch t.user u where u.email = :email");
+                    query.setParameter("email", email);
+                    return (List<Task>) query.list();
+                }
         );
     }
 
@@ -93,6 +98,30 @@ public class HiberStore implements Store {
     public Task findById(Integer id) {
         return this.tx(
                 session -> session.get(Task.class, id)
+        );
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return this.tx(
+                session -> {
+                    Query<User> query = session.createQuery("from User u where u.email=:email", User.class);
+                    query.setParameter("email", email);
+                    User user = query.uniqueResult();
+                    if (user == null) {
+                        user = User.of("", "");
+                    }
+                    return user;
+                }
+
+        );
+    }
+
+
+    @Override
+    public void addUser(User user) {
+        this.tx(
+                session -> session.save(user)
         );
     }
 }
